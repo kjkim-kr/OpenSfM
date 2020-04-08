@@ -87,7 +87,7 @@ class Command:
 
         shot_index = {image: i for i, image in enumerate(reconstruction.shots)}
 
-        fvis = open(os.path.join(output_path, "vis.dat"), "w")
+        fvis = io.open_wt(os.path.join(output_path, "vis.dat"), "w")
         fvis.write("VISDATA\n")
         fvis.write("%d\n" % len(shot_index))
 
@@ -133,14 +133,14 @@ class Command:
             P = resized_K.dot(shot.pose.get_Rt())
 
             new_txt = os.path.join(output_path, "txt", base + ".txt")
-            with open(new_txt, "w") as f:
+            with io.open_wt(new_txt, "w") as f:
                 f.write("CONTOUR\n")
                 np.savetxt(f, P, str('%f'))
 
         fvis.close()
 
         # options.txt
-        with open(os.path.join(output_path, "pmvs_options.txt"), "w") as f:
+        with io.open_wt(os.path.join(output_path, "pmvs_options.txt"), "w") as f:
             f.write("level 1\n")
             f.write("csize 2\n")
             f.write("threshold 0.7\n")
